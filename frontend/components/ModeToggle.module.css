@@ -1,0 +1,15 @@
+/* ModeToggle.module.css */
+
+.icon {
+    width: rem(22px);
+    height: rem(22px);
+  }
+  
+  .dark {
+    display: none; /* Default to hide in dark mode */
+  }
+  
+  .light {
+    display: block; /* Default to show in light mode */
+  }
+  
