@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import CardComponent from '../components/CardComponent';
+import CardComponent from '@/app/(testAPI)/_components/CardComponent';
 import exp from 'constants';
 
 interface User {
