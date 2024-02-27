@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import CardComponent from '@/app/(testAPI)/_components/CardComponent';
+import CardComponent from '@/app/(main)/_components/CardComponent';
 import exp from 'constants';
 
 interface User {
@@ -73,9 +73,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+    <div className="h-full flex-1 flex-col  items-center space-y-4 p-8 md:flex">
       <div className="space-y-4 w-full max-w-2xl">
-        <h1 className="text-2xl font-bold text-gray-800 text-center">User Management App</h1>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white text-center">User Management App</h1>
 
         {/* Create user */}
         <form onSubmit={createUser} className="p-4 bg-blue-100 rounded shadow">
@@ -133,6 +133,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

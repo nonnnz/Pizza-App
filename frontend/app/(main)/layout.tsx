@@ -7,8 +7,7 @@ const MainLayout = ({
     children: React.ReactNode;
 }) => {
     return ( 
-        // dark:bg-[#191919]
-        <div className=" ">
+        <div className=" dark:bg-[#191919]">
             <Navbar />
             <main className="flex-1 min-h-screen overflow-y-auto pt-24">
                 {children}

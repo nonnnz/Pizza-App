@@ -1,42 +1,63 @@
-import React from 'react';
-import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
-import { IconSun, IconMoon } from '@tabler/icons-react';
-import cx from 'clsx';
+"use client";
 
-import classes from './ModeToggle.module.css';
+import * as React from "react"
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
+
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function ModeToggle() {
-  const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
-
-  const toggleColorScheme = () => {
-    const newColorScheme = computedColorScheme === 'light' ? 'dark' : 'light';
-    // console.log('New color scheme:', newColorScheme);
-    setColorScheme(newColorScheme);
-  };
+  const { setTheme } = useTheme()
 
   return (
-    <div>
-        <ActionIcon
-      onClick={toggleColorScheme}
-      variant="default"
-      size="xl"
-      aria-label="Toggle color scheme"
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon">
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+export function ModeToggleTG() {
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
-      {/* <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
-      <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} /> */}
-            <IconSun
-        style={{ display: computedColorScheme === 'dark' ? 'none' : 'block' }}
-        className={cx(classes.icon)}
-        stroke={1.5}
-        />
-        <IconMoon
-        style={{ display: computedColorScheme === 'light' ? 'none' : 'block' }}
-        className={cx(classes.icon)}
-        stroke={1.5}
-        />
-        </ActionIcon> 
-    </div>
-    
+      {theme === "dark" ? (
+        <>
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        </>
+      ) : (
+        <>
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+        </>
+      )}
+      <span className="sr-only">Toggle theme</span>
+    </Button>
   );
 }
