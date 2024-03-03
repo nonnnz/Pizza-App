@@ -7,8 +7,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt   DateTime
+}
+
 model User {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String
+  user_id    String   @id @default(uuid()) @db.VarChar(36)
+  us_fname   String
+  us_lname   String
+  us_gender  String
+  us_role    Role     @default(USER)
+  us_phone   String
+  us_birthdate DateTime
+  us_email   String    @unique
+  us_password String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  products   Product[]
+}
+
+enum Role {
+  USER
+  KITCHEN
+  DELIVERY
+  MANAGER
+  ADMIN
+}
+
+model Product {
+  pd_id           Int      @id @default(autoincrement())
+  pd_name         String
+  pd_price        Float
+  created_by_id   String
+  created_by      User      @relation(fields: [created_by_id], references: [user_id])
 }

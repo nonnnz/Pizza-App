@@ -1,16 +1,24 @@
-// import { Navbar } from "./_components/navbar";
+import Header from "./_components/header";
+import Sidebar from "./_components/sidebar";
+import type { Metadata } from "next";
 
-interface ProtectedLayoutProps {
-  children: React.ReactNode;
+export const metadata: Metadata = {
+  title: "Next Shadcn Dashboard Starter",
+  description: "Basic dashboard with Next.js and Shadcn",
 };
 
-const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
-  return ( 
-    <div className="h-full w-full flex flex-col gap-y-10 items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800">
-      {/* <Navbar /> */}
-      {children}
-    </div>
-   );
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <Header />
+      <div className="flex h-screen overflow-hidden">
+        <Sidebar />
+        <main className="w-full pt-16">{children}</main>
+      </div>
+    </>
+  );
 }
- 
-export default ProtectedLayout;

@@ -3,7 +3,6 @@
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -11,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useEffect, useState } from "react";
 
 export function ModeToggle() {
   const { setTheme } = useTheme()
@@ -41,6 +41,14 @@ export function ModeToggle() {
 
 export function ModeToggleTG() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Only render the component on the client side
+  if (!mounted) return null;
 
   return (
     <Button
