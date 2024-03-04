@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Logo } from "./logo"
+import { Logo } from "@/components/logo";
 import { useScrollTop } from "@/hooks/use-scroll-top";
 import { ModeToggle, ModeToggleTG } from "@/components/mode-toggle";
 import { cn } from "@/lib/utils";
@@ -16,7 +16,7 @@ export const Navbar = () => {
     return (
         <div className="flex-grow">
             <div className={cn(
-                "z-50 bg-background dark:bg-[#191919] fixed top-0 flex items-center w-full p-6",
+                "z-50 bg-background fixed top-0 flex items-center w-full p-6",
                 scrolled && "border-b shadow-sm"
             )}>
                 <div className="ml-auto justify-start w-full flex items-center gap-x-2">
