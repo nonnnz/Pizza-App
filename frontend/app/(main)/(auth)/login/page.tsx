@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,19 +15,42 @@ import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import Link from "next/link";
 import { login, fetchMe, logout } from '@/api/auth';
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const [credentials, setCredentials] = React.useState({ us_email: '', us_password: '' });
+  const [credentials, setCredentials] = useState({ us_email: '', us_password: '' });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchMe();
+        console.log('User data:', data);
+        if (data.us_role === 'USER') {
+          router.push('/');
+        } else {
+          router.push('/dashboard');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        // Handle the error, for example, redirect to the login page
+        router.push('/login');
+      }
+    };
+  
+    fetchData(); // Call the asynchronous function
+  
+  }, [router]);
 
   const handleLogin = async () => {
-    console.log('Logging');
+    // console.log('Logging');
     const userData = await login(credentials);
     if (userData.isAxiosError) {
     toast({
@@ -43,6 +66,11 @@ const LoginPage = () => {
             title: "Login successful",
             description: "Welcome back!",
         });
+        if (userData.us_role === 'USER') {
+          router.push('/'); 
+        } else {
+          router.push('/dashboard');
+        }
     }
   };
 

@@ -12,8 +12,43 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserRoundCog } from "lucide-react"
+import { login, fetchMe, logout } from '@/api/auth';
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 export function UserNav() {
+    const router = useRouter();
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+              const data = await fetchMe();
+              console.log('User data:', data);
+              setUserData(data);
+              if (data.us_role === 'USER') {
+                router.push('/'); 
+              }
+            } catch (error) {
+              console.error('Error fetching user data:', error);
+              router.push('/login');
+            }
+          };
+      
+          fetchData(); // Call the async function
+    }, []);
+
+    const handleLogout = async () => {
+        try {
+          await logout();
+          console.log('Logged out');
+          router.push('/login');
+        } catch (error) {
+          console.error('Logout error:', error);
+        }
+    }
+    
+
     return (
     <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -29,7 +64,7 @@ export function UserNav() {
         <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-                name???
+                name {userData?.us_fname} {userData?.us_lname || 'loading...'}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
                 email???
@@ -53,7 +88,7 @@ export function UserNav() {
             <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => console.log("out")}>
+        <DropdownMenuItem onClick={() => handleLogout()}>
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

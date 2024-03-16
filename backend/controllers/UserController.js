@@ -40,8 +40,11 @@ export const getUserById = async (req, res) => {
 export const createUser = async (req, res) => {
   const { us_fname, us_lname, us_gender, us_role, us_phone, us_birthdate, us_email, us_password, confirm_password } = req.body;
 
+  const us_fullname = `${us_fname} ${us_lname}`;
+
   try {
     if (us_password !== confirm_password) return res.status(400).json({ error: "Passwords do not match" });
+    if(us_password === "" || us_password === null) return res.status(404).json({msg: "Empty Password"});
     const hashPassword = await argon2.hash(us_password);
 
     const newUser = await prisma.user.create({
@@ -67,12 +70,12 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     const userId = req.params.id;
     const { us_fname, us_lname, us_gender, us_role, us_phone, us_birthdate, us_email, us_password, confirm_password } = req.body;
-    let hashPassword;
-    if(us_password === "" || us_password === undefined) {
-        hashPassword = us_password;
-    } else {
-        hashPassword = await argon2.hash(us_password);
+    const currentUser = await getUserById(userId);
+    let hashPassword = currentUser.us_password;
+    if (us_password && us_password !== "" && us_password !== undefined && us_password !== currentUser.us_password) {
+      hashPassword = await argon2.hash(us_password);
     }
+    
     if (us_password !== confirm_password) return res.status(400).json({ error: "Passwords do not match" });
 
     try {

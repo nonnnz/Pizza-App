@@ -39,12 +39,16 @@ export function DataTable<TData, TValue>({
   });
 
   /* this can be used to get the selectedrows 
-  console.log("value", table.getFilteredSelectedRowModel()); */
+  // console.log("value", table.getFilteredSelectedRowModel()); */
+  // console.log("value", table.getFilteredSelectedRowModel());
+  // console.log(table.getAllColumns());
+  // console.log(table.getFilteredRowModel());
+  
 
   return (
     <>
       <Input
-        placeholder={`Search ${searchKey}...`}
+        placeholder={`Search First Name...`}
         value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
         onChange={(event) =>
           table.getColumn(searchKey)?.setFilterValue(event.target.value)

@@ -9,6 +9,14 @@ export type User = {
   verified: boolean;
   status: string;
 };
+
+export type UserTableColumns = {
+  user_id: number;
+  us_fname: string;
+  us_lname: string;
+  us_email: string;
+  us_role: string;
+}
 export const users: User[] = [
   {
     id: 1,

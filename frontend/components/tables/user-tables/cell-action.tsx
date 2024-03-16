@@ -8,13 +8,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User } from "@/constants/data";
+import { User, UserTableColumns } from "@/constants/data";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { deleteUser } from "@/api/users";
 
 interface CellActionProps {
-  data: User;
+  data: UserTableColumns;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -22,7 +23,18 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  const onConfirm = async () => {};
+  const onConfirm = async () => {
+    router.refresh();
+    setLoading(true);
+    let id = '';
+    if (data.user_id) {
+      id = data.user_id.toString();;
+    }
+    await deleteUser(id);
+    setLoading(false);
+    setOpen(false);
+    window.location.reload();
+  };
 
   return (
     <>
@@ -43,7 +55,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
           <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/user/${data.id}`)}
+            onClick={() => router.push(`/dashboard/user/${data.user_id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>

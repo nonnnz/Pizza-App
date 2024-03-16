@@ -1,9 +1,7 @@
 "use client";
 
 import BreadCrumb from "@/components/breadcrumb";
-// import { ProductForm } from "@/components/forms/product-form";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { usePathname, useSearchParams } from 'next/navigation'
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -48,55 +46,52 @@ import {
 import { format, set } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { updateUser, getUser } from "@/api/users";
+import { create } from "domain";
+import { createUser } from "@/api/users";
+
 
 const formSchema = z.object({
-  us_fname: z.string().min(1, "First name is required").max(50, "First name must not exceed 50 characters"),
-  
-  us_lname: z.string().min(1, "Last name is required").max(50, "Last name must not exceed 50 characters"),
-  
-  us_gender: z.string({
-    required_error: "Please select a gender.",
-  }),
-
-  us_role: z.string({
-    required_error: "Please select a role.",
-  }),
-
-  us_phone: z.string().refine(value => /^[0-9]{10}$/.test(value), {
-    message: "Invalid phone number. Please enter a 10-digit number.",
-  }),
-
-  us_birthdate: z.date({
-      required_error: "A date of birth is required.",
+    us_fname: z.string().min(1, "First name is required").max(50, "First name must not exceed 50 characters"),
+    
+    us_lname: z.string().min(1, "Last name is required").max(50, "Last name must not exceed 50 characters"),
+    
+    us_gender: z.string({
+      required_error: "Please select a gender.",
     }),
-
-  us_email: z.string().min(1, "Email is required").email({
-    message: "Invalid email address. Please enter a valid email.",
-  }),
-
-  us_password: z.string().min(1, "Password is required").min(6, "Password must be at least 6 characters."),
   
-  confirm_password: z.string().min(1, "Confirm password is required")
-})
-.refine(data => data.us_password === data.confirm_password, {
-  path: ["confirm_password"],
-  message: "Passwords do not match. Please try again.",
-});
+    us_role: z.string({
+      required_error: "Please select a role.",
+    }),
+  
+    us_phone: z.string().refine(value => /^[0-9]{10}$/.test(value), {
+      message: "Invalid phone number. Please enter a 10-digit number.",
+    }),
+  
+    us_birthdate: z.date({
+        required_error: "A date of birth is required.",
+      }),
+  
+    us_email: z.string().min(1, "Email is required").email({
+      message: "Invalid email address. Please enter a valid email.",
+    }),
+  
+    us_password: z.string().min(1, "Password is required").min(6, "Password must be at least 6 characters."),
+    
+    confirm_password: z.string().min(1, "Confirm password is required")
+  })
+  .refine(data => data.us_password === data.confirm_password, {
+    path: ["confirm_password"],
+    message: "Passwords do not match. Please try again.",
+  });
+  
 
 export default function Page() {
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const userId = pathname.split('/').pop();
-  let Id = '';
-  if(userId) Id = userId;
-
-  const breadcrumbItems = [
+    const breadcrumbItems = [
     { title: "User", link: "/dashboard/user" },
     { title: "Create", link: "/dashboard/user/new" }
     ];
 
-  const [userDetails, setUserDetails] = useState({
+    const [userDetails, setUserDetails] = React.useState({
     us_fname: "",
     us_lname: "",
     us_gender: "",
@@ -130,67 +125,55 @@ export default function Page() {
             (values.us_birthdate as any) = values.us_birthdate.toISOString();
           }
         // console.log("Creating user:", values);
-        // if (values.us_password === '') {
-        //     values.us_password = userDetails.us_password;
-        //     values.confirm_password = userDetails.us_password;
-        // }
         setUserDetails(values);
-        console.log("Updating user:", userDetails);
-        handleUpdateUser(values);
+        console.log("Creating user:", userDetails);
+        handleCreateUser(values);
     };
 
-    const handleUpdateUser = (values:any) => {
-        // updateUser(Id, values)
-        console.log("Updating user:", values);
+    const handleCreateUser = (values: any) => {
+        console.log("Creating user:", values);
         try {
-            const update = updateUser(Id, values);
-            console.log('User updated:', update.then((result) => {
-              console.log("Promise fulfilled:", result);
-              router.push('/dashboard/user');
-            }).catch((error) => {
-              console.error("Promise rejected:", error);
-            }));
-           
+            const create = createUser(values);
+            console.log('User created:', create.then((result) => {
+                console.log("Promise fulfilled:", result);
+                router.push('/dashboard/user');
+              }).catch((error) => {
+                console.error("Promise rejected:", error);
+              }));
+              
         } catch (error) {
-            console.error('Error updating user:', error);
-        }   
-    }
+            console.error('Error creating user: front', error);
+        }
+    };
+
+    const handleChange = (field, value) => {
+    setUserDetails((prevDetails) => ({ ...prevDetails, [field]: value }));
+    };
+
+    const handleCreateUser_old = () => {
+    // Implement your logic to create a user with userDetails
+    console.log("Creating user:", userDetails);
+    };
 
     const router = useRouter();
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-      const fetchData = async () => {
-          try {
-              const data = await fetchMe();
-              setUserData(data);
-              // console.log(data.us_role);
-              if (data.us_role !== 'ADMIN' && data.us_role !== 'MANAGER') {
-                  router.push('/');
-              }
-          } catch (error) {
-              console.error('Error fetching user data:', error);
-              router.push('/login');
-          }
-      };
-      const fetchUserData = async () => {
-        try {
-          const data = await getUser(Id);
-          form.reset(data);
-          form.setValue('us_birthdate', new Date(data.us_birthdate));
-          form.setValue('us_password', data.us_password);
-          form.setValue('confirm_password', data.us_password);
-          // form.setValue('us_gender', data.us_gender);
-          setUserDetails(data);
-          // console.log(data);
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-          router.push('/dashboard/user');
-        }
-      } 
-      fetchData(); // Call the async function
-      fetchUserData();
-    }, [Id, setUserDetails]);
+        const fetchData = async () => {
+            try {
+                const data = await fetchMe();
+                setUserData(data);
+                if (data.us_role !== 'ADMIN' && data.us_role !== 'MANAGER') {
+                    router.push('/');
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                router.push('/login');
+            }
+            };
+        
+            fetchData(); // Call the async function
+    }, []);
   
   return (
     <ScrollArea className="h-full">
@@ -199,7 +182,7 @@ export default function Page() {
         <div className="flex items-center justify-between">
             <Card className="w-full">
                 <CardHeader>
-                    <CardTitle>Update User</CardTitle>
+                    <CardTitle>Create User</CardTitle>
                 </CardHeader>
                 <CardContent>
                 <Form {...form}>
@@ -243,7 +226,7 @@ export default function Page() {
                         render={({ field }) => (
                             <FormItem>
                             <FormLabel>Gender</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={userDetails.us_gender}>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                                 <SelectTrigger id="us_gender">
                                     <SelectValue placeholder="Select" />
@@ -379,7 +362,7 @@ export default function Page() {
                         name="us_password"
                         render={({ field }) => (
                             <FormItem>
-                            <FormLabel>New Password</FormLabel>
+                            <FormLabel>Password</FormLabel>
                             <FormControl>
                                 <Input
                                 id="us_password"
@@ -415,14 +398,14 @@ export default function Page() {
                         </div>
                     </div>
                     <div className="flex justify-end">
-                    <Button type="submit">Update User</Button>
+                    <Button type="submit">Create User</Button>
                     </div>
                     </form>
                 </Form>
                 </CardContent>
                 {/* <CardFooter className="flex justify-between">
                     <Button variant="outline">Cancel</Button>
-                    <Button onClick={onSubmit}>Update User</Button>
+                    <Button onClick={onSubmit}>Create User</Button>
                 </CardFooter> */}
             </Card>
         </div>
