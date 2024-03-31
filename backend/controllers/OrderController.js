@@ -80,7 +80,14 @@ export const createOrder = async (req, res) => {
             });
             return newOrderItem;
         }));
-            // Deactivate shopping cart
+        // update order total
+        const orderTotal = orderItems.reduce((acc, item) => acc + item.orderit_total, 0);
+        await prisma.order.update({
+            where: { order_id: newOrder.order_id },
+            data: { order_total: orderTotal + deli_charge },
+        });
+
+        // Deactivate shopping cart
         await prisma.shoppingCart.update({
             where: { cart_id: shoppingCart.cart_id },
             data: { cart_active: false },
