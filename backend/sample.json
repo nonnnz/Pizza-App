@@ -1,0 +1,128 @@
+// pizza
+
+{
+    "pz_name": "Chicken&Tomato",
+    "pz_des": "Chicken, Tomato, Cheese, Tomato Sauce",
+    "pz_qty": 99,
+    "pz_image": "pizza/600x600 Chicken&Tomato.png"
+}
+
+{
+    "pz_name": "Ham Cheese Party",
+    "pz_des": "Ham, Cheese, Mushroom, Tomato Sauce",
+    "pz_qty": 99,
+    "pz_image": "pizza/600x600 Ham Cheese Party.png"
+}
+
+{
+    "pz_name": "Mighty Trio Pork",
+    "pz_des": "Pork, Cheese, Tomato, Tomato Sauce",
+    "pz_qty": 99,
+    "pz_image": "pizza/600x600 Mighty Trio Pork.png"
+}
+
+{
+    "pz_name": "Pepperoni Supreme",
+    "pz_des": "Pepperoni, Cheese, Tomato, Tomato Sauce"
+    "pz_qty": 99,
+    "pz_image": "pizza/600x600 Pepperoni Supreme.png"
+}
+
+{
+    "pz_name": "Spicy Pepperoni",
+    "pz_des": "Tomato, Cheese, Pepperoni, Tomato Sauce",
+    "pz_qty": 99,
+    "pz_image": "pizza/600x600 Spicy Pepperoni.png"
+}
+
+// food
+
+{
+    "size_name": "Large",
+    "crust_name": "Pan",
+    "pz_id": 1,
+    "fd_price": 349
+}
+
+{
+    "size_name": "Large",
+    "crust_name": "Crispy Thin",
+    "pz_id": 1,
+    "fd_price": 349
+}
+
+{
+    "size_name": "Large",
+    "crust_name": "Extreme Cheese",
+    "pz_id": 1,
+    "fd_price": 449
+}
+
+{
+    "size_name": "Medium",
+    "crust_name": "Pan",
+    "pz_id": 1,
+    "fd_price": 249
+}
+
+{
+    "size_name": "Medium",
+    "crust_name": "Crispy Thin",
+    "pz_id": 1,
+    "fd_price": 249
+}
+
+{
+    "size_name": "Medium",
+    "crust_name": "Extreme Cheese",
+    "pz_id": 1,
+    "fd_price": 349
+}
+
+{
+    "size_name": "Large",
+    "crust_name": "Pan",
+    "pz_id": 2,
+    "fd_price": 349
+}
+
+{
+    "size_name": "Large",
+    "crust_name": "Crispy Thin",
+    "pz_id": 2,
+    "fd_price": 349
+}
+
+{
+    "size_name": "Large",
+    "crust_name": "Extreme Cheese",
+    "pz_id": 2,
+    "fd_price": 449
+}
+
+{
+    "size_name": "Medium",
+    "crust_name": "Pan",
+    "pz_id": 2,
+    "fd_price": 249
+}
+
+{
+    "size_name": "Medium",
+    "crust_name": "Crispy Thin",
+    "pz_id": 2,
+    "fd_price": 249
+}
+
+{
+    "size_name": "Medium",
+    "crust_name": "Extreme Cheese",
+    "pz_id": 2,
+    "fd_price": 349
+}
+
+// cart item
+ {
+    "cartit_food_id": 2,
+    "quantity": 1
+ }

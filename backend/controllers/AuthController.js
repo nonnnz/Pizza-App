@@ -43,12 +43,16 @@ export const Me = async (req, res) => {
   
       const user = await prisma.user.findUnique({
         where: { user_id: req.session.userId },
+        include: {
+          addressbooks: true,
+          shoppingcarts: true,
+          orders: true,
+        },
       });
   
       if (!user) {
         return res.status(401).json({ error: "User not found" });
       }
-  
       res.status(200).json(user);
     } catch (error) {
       console.error("Error fetching user:", error);

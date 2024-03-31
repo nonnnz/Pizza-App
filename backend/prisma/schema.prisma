@@ -27,7 +27,9 @@ model User {
   us_password String
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-  products   Product[]
+  addressbooks AddressBook[]
+  shoppingcarts ShoppingCart[]
+  orders        Order[]
 }
 
 enum Role {
@@ -38,10 +40,112 @@ enum Role {
   ADMIN
 }
 
-model Product {
-  pd_id           Int      @id @default(autoincrement())
-  pd_name         String
-  pd_price        Float
-  created_by_id   String
-  created_by      User      @relation(fields: [created_by_id], references: [user_id])
+model AddressBook {
+  addb_id       Int      @id @default(autoincrement())
+  addb_user_id      String
+  addb_buildingNo     String
+  addb_buildingName   String
+  addb_street         String
+  addb_prov          String
+  addb_dist         String
+  addb_subdist      String
+  addb_zipcode      String
+  addb_directionguide String @default("")
+  addb_phone        String
+  addb_name         String
+  addb_user         User      @relation(fields: [addb_user_id], references: [user_id], onUpdate: Cascade, onDelete: Cascade)
+}
+
+model ShoppingCart {
+  cart_id       Int      @id @default(autoincrement())
+  cart_user_id  String
+  cart_total    Float
+  cart_active   Boolean
+  cart_user     User      @relation(fields: [cart_user_id], references: [user_id], onUpdate: Cascade, onDelete: Cascade)
+  cart_items    CartItem[]
+}
+
+model CartItem {
+  cart_itemid       Int      @id @default(autoincrement())
+  quantity          Int
+  cartit_total      Float
+  cart_shoppingcart_id Int
+  shoppingcart      ShoppingCart @relation(fields: [cart_shoppingcart_id], references: [cart_id], onUpdate: Cascade, onDelete: Cascade)
+  cartit_food_id    Int
+  food              Food        @relation(fields: [cartit_food_id], references: [fd_id], onUpdate: Cascade, onDelete: Cascade)
+
+  // @@id([cart_shoppingcart_id, cartit_food_id])
+}
+
+model Food {
+  fd_id       Int      @id @default(autoincrement())
+  fd_name     String
+  fd_price    Float
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  cartitems   CartItem[]
+  pizzadetails PizzaDetail[]
+  orderitems  OrderItem[]
+}
+
+model PizzaDetail {
+  pd_id       Int      @id @default(autoincrement())
+  size_name  String
+  crust_name String
+  fd_id      Int
+  food       Food      @relation(fields: [fd_id], references: [fd_id])
+  pz_id      Int
+  pizza      Pizza     @relation(fields: [pz_id], references: [pz_id])
+}
+
+model Pizza {
+  pz_id       Int      @id @default(autoincrement())
+  pz_name     String
+  pz_des    String
+  pz_qty    Int
+  pz_image    String @default("pizza\not-found.png")
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  pizzadetails PizzaDetail[]
+}
+
+enum OrderStatus {
+  RECEIVED
+  INPROGRESS
+  OUTFORDELIVERY
+  DELIVERED
+  CANCELLED
+  RETURNED
+  REFUNDED
+}
+
+enum PayMethod {
+  CASH
+  CREDITCARD
+}
+
+model Order {
+  order_id       Int      @id @default(autoincrement())
+  order_status   OrderStatus @default(RECEIVED)
+  deli_charge    Float
+  order_total    Float
+  deli_address   String
+  pay_method     PayMethod
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  user_id        String
+  user           User      @relation(fields: [user_id], references: [user_id])
+  order_items    OrderItem[]
+}
+
+model OrderItem {
+  order_itemid       Int      @id @default(autoincrement())
+  quantity           Int
+  orderit_total      Float
+  orderit_order_id     Int
+  order             Order      @relation(fields: [orderit_order_id], references: [order_id])
+  orderit_food_id    Int
+  food               Food        @relation(fields: [orderit_food_id], references: [fd_id])
+
+  // @@id([orderit_order_id, orderit_food_id])
 }

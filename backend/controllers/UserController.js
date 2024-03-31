@@ -5,7 +5,9 @@ export const getAllUsers = async (req, res) => {
     try {
     const users = await prisma.user.findMany({
         include: {
-        products: true,
+          addressbooks: true,
+          shoppingcarts: true,
+          orders: true,
         },
     });
     res.status(200).json(users);
@@ -22,7 +24,9 @@ export const getUserById = async (req, res) => {
     const user = await prisma.user.findUnique({
         where: { user_id: userId },
         include: {
-        products: true,
+          addressbooks: true,
+          shoppingcarts: true,
+          orders: true,
         },
     });
 
@@ -51,6 +55,7 @@ export const createUser = async (req, res) => {
       data: {
         us_fname,
         us_lname,
+        us_fullname,
         us_gender,
         us_role,
         us_phone,
@@ -78,12 +83,15 @@ export const updateUser = async (req, res) => {
     
     if (us_password !== confirm_password) return res.status(400).json({ error: "Passwords do not match" });
 
+    const us_fullname = `${us_fname} ${us_lname}`;
+
     try {
     const updatedUser = await prisma.user.update({
         where: { user_id: userId },
         data: {
         us_fname,
         us_lname,
+        us_fullname,
         us_gender,
         us_role,
         us_phone,
