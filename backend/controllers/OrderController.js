@@ -1,5 +1,29 @@
 import prisma from "../DB/db.config.js";
 
+export const findUniqueOrderId = async () => {
+    try {
+        // Find the last order ID in the database
+        const lastOrder = await prisma.order.findFirst({
+            orderBy: { order_id: 'desc' },
+        });
+        // console.log("lastOrder", lastOrder);
+
+        let newOrderId;
+        if (lastOrder) {
+            // Increment the last order ID by 1
+            newOrderId = lastOrder.order_id + 1;
+        } else {
+            // If there are no orders in the database, start from 1
+            newOrderId = 1;
+        }
+        // console.log("newOrderId", newOrderId);
+        return newOrderId;
+    } catch (error) {
+        console.error("Error creating order:", error);
+        throw error;
+    }
+};
+
 export const getAllOrders = async (req, res) => {
     try {
         const orders = await prisma.order.findMany({
@@ -37,9 +61,11 @@ export const createOrder = async (req, res) => {
     const { deli_charge, deli_address, pay_method } = req.body;
 
     try {
+        const orderId = await findUniqueOrderId();
         // empty order
         const newOrder = await prisma.order.create({
             data: {
+                order_id: orderId,
                 user: { connect: { user_id: userId } },
                 deli_charge: deli_charge,
                 order_total: 0,

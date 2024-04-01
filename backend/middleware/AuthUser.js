@@ -13,6 +13,7 @@ export const verifyUser = async (req, res, next) => {
         }
         req.userId = user.user_id;
         req.role = user.us_role;  
+        console.log("user found");
         next();
     } catch (error) {
         console.error("Error fetching user:", error);

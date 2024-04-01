@@ -110,6 +110,7 @@ model Pizza {
 }
 
 enum OrderStatus {
+  PENDING
   RECEIVED
   INPROGRESS
   OUTFORDELIVERY
@@ -122,10 +123,12 @@ enum OrderStatus {
 enum PayMethod {
   CASH
   CREDITCARD
+  PROMTPAY
+  ONLINEPAYMENT
 }
 
 model Order {
-  order_id       Int      @id @default(autoincrement())
+  order_id       Int      @id 
   order_status   OrderStatus @default(RECEIVED)
   deli_charge    Float
   order_total    Float
@@ -136,6 +139,7 @@ model Order {
   user_id        String
   user           User      @relation(fields: [user_id], references: [user_id])
   order_items    OrderItem[]
+  sessionId     String @unique @default(cuid())
 }
 
 model OrderItem {

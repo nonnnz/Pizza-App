@@ -9,6 +9,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { Button } from "@/components/ui/button";
 import { getCart } from "@/api/cart";
+import axios from 'axios';
 
 const Payment = () => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
@@ -35,23 +36,27 @@ const Payment = () => {
 
         const body = {
             cart,
+            deli_charge: 40,
+            deli_address: 'none',
         }
 
         const headers = {
             'Content-Type': 'application/json'
         }
 
-        const response = await fetch(`${apiUrl}/payment`, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(body)
+        // const response = await fetch(`${apiUrl}/create-payment`, {
+        //     method: 'POST',
+        //     headers: headers,
+        //     body: JSON.stringify(body)
+        // });
+        // Send POST request using Axios
+        const response = await axios.post(`${apiUrl}/create-payment`, body, {
+            headers: headers
         });
         console.log('Response:', response);
 
-        const data = await response.json();
-
         const result = await stripe.redirectToCheckout({
-            sessionId: data.id
+            sessionId: response.data.id
         });
 
         if (result.error) {
