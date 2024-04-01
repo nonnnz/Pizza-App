@@ -23,7 +23,7 @@
 
 {
     "pz_name": "Pepperoni Supreme",
-    "pz_des": "Pepperoni, Cheese, Tomato, Tomato Sauce"
+    "pz_des": "Pepperoni, Cheese, Tomato, Tomato Sauce",
     "pz_qty": 99,
     "pz_image": "pizza/600x600 Pepperoni Supreme.png"
 }
