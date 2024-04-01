@@ -8,9 +8,31 @@ import { ModeToggle, ModeToggleTG } from "@/components/mode-toggle";
 import { cn } from "@/lib/utils";
 import { Spinner } from "@/components/spinner";
 import { Menu, X, ChevronDown} from "lucide-react";
-import { useState } from "react";
+import { login, fetchMe, logout } from '@/api/auth';
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 export const Navbar = () => {
+    const router = useRouter();
+      const [userData, setUserData] = useState(null);
+
+      useEffect(() => {
+          const fetchData = async () => {
+              try {
+                const data = await fetchMe();
+                console.log('User data:', data);
+                setUserData(data);
+                if (data.us_role === 'USER') {
+                  router.push('/'); 
+                }
+              } catch (error) {
+                console.error('Error fetching user data:', error);
+                router.push('/login');
+              }
+            };
+        
+            fetchData(); // Call the async function
+      }, []);
     const scrolled = useScrollTop();
 
     return (

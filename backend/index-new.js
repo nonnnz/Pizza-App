@@ -10,6 +10,7 @@ import AddressBookRoute from './routes/AddressBookRoute.js';
 import FoodRoute from './routes/FoodRoute.js';
 import ShoppingCart from './routes/ShoppingCartRoute.js';
 import Order from './routes/OrderRoute.js';
+import Payment from './routes/PaymentRoute.js';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import multer from 'multer';
 
@@ -58,6 +59,7 @@ app.use(AddressBookRoute);
 app.use(FoodRoute);
 app.use(ShoppingCart);
 app.use(Order);
+app.use(Payment);
 
 //test api
 app.get('/test', (req, res) => {

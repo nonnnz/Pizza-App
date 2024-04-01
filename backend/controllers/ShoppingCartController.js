@@ -9,6 +9,7 @@ export const getActiveCartId = async (userId) => {
     if (!existingShoppingCart) {
         throw new Error("Active cart not found for the user");
     }
+    // console.log("error here");
 
     return existingShoppingCart.cart_id;
 };
@@ -28,9 +29,10 @@ export const getAllShoppingCarts = async (req, res) => {
 };
 
 export const getShoppingCartById = async (req, res) => {
-    const cartId = parseInt(req.params.id);
+    // const cartId = parseInt(req.params.id);
     const userId = req.session.userId;
     try {
+        const cartId = await getActiveCartId(userId);
         // Check if the shopping cart belongs to the authenticated user
         const shoppingCart = await prisma.shoppingCart.findUnique({
             where: { cart_id: cartId },
@@ -152,7 +154,7 @@ export const getCartItemsByCartId = async (req, res) => {
         const cartId = await getActiveCartId(userId);
 
         const cartItems = await prisma.cartItem.findMany({
-            where: { cart_id: cartId },
+            where: { cart_shoppingcart_id: cartId },
             include: {
                 food: true,
             },
@@ -318,6 +320,9 @@ export const updateCartItem = async (req, res) => {
             });
 
             return res.status(200).json(deletedCartItem);
+        }
+        if (quantity > 99) {
+            return res.status(400).json({ message: 'Quantity cannot exceed 99' });
         }
 
         const oldCartItem = await prisma.cartItem.findUnique({
