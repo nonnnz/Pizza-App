@@ -41,7 +41,7 @@ export function DataTable<TData, TValue>({
   const searchDescriptions: Record<string, string> = {
     us_fullname: "full name",
     pz_name: "pizza name",
-    // Add more mappings as needed
+    fd_name: "food name",
   };
   
   const searchDescription = searchDescriptions[searchKey] || searchKey;

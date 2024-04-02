@@ -17,24 +17,25 @@ export type Pizza = {
   pz_image: string;
 }
 
-export type Employee = {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  gender: string;
-  date_of_birth: string; // Consider using a proper date type if possible
-  street: string;
-  city: string;
-  state: string;
-  country: string;
-  zipcode: string;
-  longitude?: number; // Optional field
-  latitude?: number; // Optional field
-  job: string;
-  profile_picture?: string | null; // Profile picture can be a string (URL) or null (if no picture)
-};
+export type Menu = {
+  fd_id: number;
+  fd_name: string;
+  fd_price: number;
+  
+}
+
+export type Order = {
+  order_id: number;
+  order_status: string;
+  deli_charge: number;
+  order_total: number;
+  deli_address: string;
+  pay_method: string;
+  created_at: string;
+  updated_at: string;
+  user_id: string;
+  sessionId: string;
+}
 
 export const navItems: NavItem[] = [
   {

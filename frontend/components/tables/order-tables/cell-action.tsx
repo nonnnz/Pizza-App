@@ -8,15 +8,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Pizza } from "@/constants/data";
+import { Order } from "@/constants/data";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-// import { deleteUser } from "@/api/users";
-import { deletePizza } from "@/api/food";
+
+import { deleteOrder } from "@/api/order";
 
 interface CellActionProps {
-  data: Pizza;
+  data: Order;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -28,10 +28,10 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     router.refresh();
     setLoading(true);
     let id = '';
-    if (data.pz_id) {
-      id = data.pz_id.toString();;
+    if (data.order_id) {
+      id = data.order_id.toString();;
     }
-    await deletePizza(id);
+    await deleteOrder(id);
     setLoading(false);
     setOpen(false);
     window.location.reload();
@@ -56,7 +56,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
           <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/pizza/${data.pz_id}`)}
+            onClick={() => router.push(`/dashboard/order/${data.order_id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>

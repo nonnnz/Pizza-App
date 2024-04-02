@@ -76,27 +76,50 @@ export const updateFood = async (req, res) => {
     const foodId = parseInt(req.params.id);
     const { size_name, crust_name, pz_id } = req.body;
     const { fd_price } = req.body;
+    if(fd_price < 0) return res.status(400).json({ message: "Price cannot be negative" });
 
     try {
+        const pizzaName = await prisma.pizza.findUnique({
+            where: { pz_id },
+            select: { pz_name: true },
+        });
         // Update the food with the provided details
         const updatedFood = await prisma.food.update({
             where: { fd_id: foodId }, // Specify the food ID to update
             data: {
+                fd_name: `${pizzaName.pz_name} - ${size_name} - ${crust_name}`,
                 fd_price,
             },
         });
 
-        // Update the associated pizza detail with the new size, crust name, and pz_id
-        const updatedPizzaDetail = await prisma.pizzaDetail.update({
+        // find all pizza details related to the food
+        const food = await prisma.food.findUnique({
             where: { fd_id: foodId },
-            data: {
-                size_name,
-                crust_name,
-                pizza: {
-                    connect: { pz_id }, // Connect to the specified pizza
-                },
+            include: {
+                pizzadetails: true,
             },
         });
+
+        // Check if pizza details exist
+        if (food && food.pizzadetails.length > 0) {
+            // Update the associated pizza detail with the new size, crust name, and pz_id
+            const updatedPizzaDetail = await prisma.pizzaDetail.update({
+                where: { pd_id: food.pizzadetails[0].pd_id }, // Assuming you want to update the first pizza detail found
+                data: {
+                    size_name,
+                    crust_name,
+                    pizza: {
+                        connect: { pz_id }, // Connect to the specified pizza
+                    },
+                },
+            });
+
+            // recaluclate the cart total
+            // Find all cart items related to the food
+            
+        } else {
+            console.error('Pizza details not found for the food with ID:', foodId);
+        }
 
         // Return the updated food
         res.status(200).json(updatedFood);

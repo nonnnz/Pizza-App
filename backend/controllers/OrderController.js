@@ -31,6 +31,9 @@ export const getAllOrders = async (req, res) => {
             order_items: true,
             // user: true,
         },
+        orderBy: {
+            updated_at: 'desc', // Sort 
+          },
         });
         res.status(200).json(orders);
     } catch (error) {

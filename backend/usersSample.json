@@ -1,4 +1,16 @@
 {
+  "us_fname": "ROOT",
+  "us_lname": "ROOT",
+  "us_gender": "Male",
+  "us_role": "ADMIN",
+  "us_phone": "9876543210",
+  "us_birthdate": "1985-05-15T00:00:00.000Z",
+  "us_email": "admin@admin.com",
+  "us_password": "password123",
+  "confirm_password": "password123"
+}
+
+{
     "us_fname": "John",
     "us_lname": "Doe",
     "us_gender": "Male",

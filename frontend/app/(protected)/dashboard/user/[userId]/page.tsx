@@ -246,7 +246,7 @@ export default function Page() {
                             <Select onValueChange={field.onChange} defaultValue={userDetails.us_gender}>
                             <FormControl>
                                 <SelectTrigger id="us_gender">
-                                    <SelectValue placeholder="Select" />
+                                    <SelectValue placeholder={userDetails.us_gender} />
                                 </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
@@ -270,7 +270,7 @@ export default function Page() {
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                                 <SelectTrigger id="us_role">
-                                    <SelectValue placeholder="Select" />
+                                    <SelectValue placeholder={field.value} />
                                 </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>

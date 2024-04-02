@@ -65,6 +65,14 @@ export const deletePizza = async (id: string) => {
     }
 }
 
+interface Food {
+    size_name: string;
+    crust_name: string;
+    pz_id: number;
+    fd_price: number;
+}
+
+// food
 export const fetchFood = async () => {
     try {
         const response = await axios.get(`${apiUrl}/food`);
@@ -72,5 +80,51 @@ export const fetchFood = async () => {
     } catch (error) {
         console.error('Error fetching food:', error);
         throw error;
+    }
+}
+
+export const createFood = async (food: Food) => {
+    try {
+        const response = await axios.post(`${apiUrl}/food`, food, {
+            withCredentials: true,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error creating food:', error);
+        return error.message;
+    }
+}
+
+export const updateFood = async (id: string, food: any) => {
+    try {
+        const response = await axios.put(`${apiUrl}/food/${id}`, food, {
+            withCredentials: true,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error updating food:', error);
+        return error.message;
+    }
+}
+
+export const getFood = async (id: string) => {
+    try {
+        const response = await axios.get(`${apiUrl}/food/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching food:', error);
+        return error.message;
+    }
+}
+
+export const deleteFood = async (id: string) => {
+    try {
+        const response = await axios.delete(`${apiUrl}/food/${id}`, {
+            withCredentials: true,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting food:', error);
+        return error.message;
     }
 }
