@@ -133,7 +133,8 @@ app.get('/test', (req, res) => {
   }
 });
 
-app.use(express.static("public/pizza"));
+// app.use(express.static("public/pizza"));
+app.use('/public', express.static('public'))
 
 // const multer  = require('multer')
 const storage = multer.diskStorage({

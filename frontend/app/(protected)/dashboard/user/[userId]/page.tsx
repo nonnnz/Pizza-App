@@ -93,7 +93,7 @@ export default function Page() {
 
   const breadcrumbItems = [
     { title: "User", link: "/dashboard/user" },
-    { title: "Create", link: "/dashboard/user/new" }
+    { title: "Update", link: "/dashboard/user/new" }
     ];
 
   const [userDetails, setUserDetails] = useState({

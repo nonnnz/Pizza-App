@@ -64,14 +64,14 @@ export function UserNav() {
         <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-                name {userData?.us_fname} {userData?.us_lname || 'loading...'}
+                Hi, {userData?.us_fname} {userData?.us_lname || 'loading...'}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-                email???
+                {userData?.us_email || 'loading...'}
             </p>
             </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        {/* <DropdownMenuSeparator />
         <DropdownMenuGroup>
             <DropdownMenuItem>
             Profile
@@ -87,10 +87,10 @@ export function UserNav() {
             </DropdownMenuItem>
             <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator /> */}
         <DropdownMenuItem onClick={() => handleLogout()}>
             Log out
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+            {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
         </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

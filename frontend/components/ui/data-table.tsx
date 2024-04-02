@@ -38,17 +38,18 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
   });
 
-  /* this can be used to get the selectedrows 
-  // console.log("value", table.getFilteredSelectedRowModel()); */
-  // console.log("value", table.getFilteredSelectedRowModel());
-  // console.log(table.getAllColumns());
-  // console.log(table.getFilteredRowModel());
+  const searchDescriptions: Record<string, string> = {
+    us_fullname: "full name",
+    pz_name: "pizza name",
+    // Add more mappings as needed
+  };
   
+  const searchDescription = searchDescriptions[searchKey] || searchKey;
 
   return (
     <>
       <Input
-        placeholder={`Search First Name...`}
+        placeholder={`Search ${searchDescription}...`}
         value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
         onChange={(event) =>
           table.getColumn(searchKey)?.setFilterValue(event.target.value)
@@ -112,7 +113,7 @@ export function DataTable<TData, TValue>({
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
         <div className="space-x-2">
-          <Button
+          {/* <Button
             variant="outline"
             size="sm"
             onClick={() => table.previousPage()}
@@ -127,7 +128,7 @@ export function DataTable<TData, TValue>({
             disabled={!table.getCanNextPage()}
           >
             Next
-          </Button>
+          </Button> */}
         </div>
       </div>
     </>

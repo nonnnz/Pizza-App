@@ -102,8 +102,7 @@ model Pizza {
   pz_id       Int      @id @default(autoincrement())
   pz_name     String
   pz_des    String
-  pz_qty    Int
-  pz_image    String @default("pizza\not-found.png")
+  pz_image    String @default("pizza/not-found.png")
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   pizzadetails PizzaDetail[]

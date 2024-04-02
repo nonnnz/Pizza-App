@@ -29,6 +29,8 @@ import {
     User2Icon,
     UserX2Icon,
     X,
+    ChefHat,
+    LineChart,
   } from "lucide-react";
   
   export type Icon = LucideIcon;
@@ -60,6 +62,8 @@ import {
     sun: SunMedium,
     moon: Moon,
     laptop: Laptop,
+    food: ChefHat,
+    analytics: LineChart,
     gitHub: ({ ...props }: LucideProps) => (
       <svg
         aria-hidden="true"

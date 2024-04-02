@@ -8,14 +8,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {  UserTableColumns } from "@/constants/data";
+import { Pizza } from "@/constants/data";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { deleteUser } from "@/api/users";
 
 interface CellActionProps {
-  data: UserTableColumns;
+  data: Pizza;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -27,8 +27,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     router.refresh();
     setLoading(true);
     let id = '';
-    if (data.user_id) {
-      id = data.user_id.toString();;
+    if (data.pz_id) {
+      id = data.pz_id.toString();;
     }
     await deleteUser(id);
     setLoading(false);
@@ -55,7 +55,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
           <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/user/${data.user_id}`)}
+            onClick={() => router.push(`/dashboard/pizza/${data.pz_id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>

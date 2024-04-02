@@ -1,0 +1,133 @@
+{
+    "us_fname": "John",
+    "us_lname": "Doe",
+    "us_gender": "Male",
+    "us_role": "USER",
+    "us_phone": "9876543210",
+    "us_birthdate": "1985-05-15T00:00:00.000Z",
+    "us_email": "john.doe@example.com",
+    "us_password": "securepassword",
+    "confirm_password": "securepassword"
+}
+
+{
+    "us_fname": "Alice",
+    "us_lname": "Smith",
+    "us_gender": "Female",
+    "us_role": "KITCHEN",
+    "us_phone": "5551234567",
+    "us_birthdate": "1992-10-20T00:00:00.000Z",
+    "us_email": "alice.smith@example.com",
+    "us_password": "strongpassword",
+    "confirm_password": "strongpassword"
+  }
+
+  {
+    "us_fname": "Emma",
+    "us_lname": "Johnson",
+    "us_gender": "Female",
+    "us_role": "DELIVERY",
+    "us_phone": "9998765432",
+    "us_birthdate": "1988-03-07T00:00:00.000Z",
+    "us_email": "emma.johnson@example.com",
+    "us_password": "safepassword",
+    "confirm_password": "safepassword"
+  }
+
+  {
+    "us_fname": "Michael",
+    "us_lname": "Brown",
+    "us_gender": "Male",
+    "us_role": "MANAGER",
+    "us_phone": "1239876543",
+    "us_birthdate": "1976-12-10T00:00:00.000Z",
+    "us_email": "michael.brown@example.com",
+    "us_password": "password123",
+    "confirm_password": "password123"
+  }
+
+  {
+    "us_fname": "Olivia",
+    "us_lname": "Martinez",
+    "us_gender": "Female",
+    "us_role": "ADMIN",
+    "us_phone": "4567890123",
+    "us_birthdate": "1995-08-25T00:00:00.000Z",
+    "us_email": "olivia.martinez@example.com",
+    "us_password": "password456",
+    "confirm_password": "password456"
+  }
+
+  {
+    "us_fname": "William",
+    "us_lname": "Taylor",
+    "us_gender": "Male",
+    "us_role": "USER",
+    "us_phone": "3216549870",
+    "us_birthdate": "1983-06-30T00:00:00.000Z",
+    "us_email": "william.taylor@example.com",
+    "us_password": "mypassword",
+    "confirm_password": "mypassword"
+  }
+
+  {
+    "us_fname": "Sophia",
+    "us_lname": "Anderson",
+    "us_gender": "Female",
+    "us_role": "KITCHEN",
+    "us_phone": "5559876543",
+    "us_birthdate": "1990-11-12T00:00:00.000Z",
+    "us_email": "sophia.anderson@example.com",
+    "us_password": "password1234",
+    "confirm_password": "password1234"
+  }
+
+  {
+    "us_fname": "Sophia",
+    "us_lname": "Anderson",
+    "us_gender": "Female",
+    "us_role": "KITCHEN",
+    "us_phone": "5559876543",
+    "us_birthdate": "1990-11-12T00:00:00.000Z",
+    "us_email": "sophia.anderson@example.com",
+    "us_password": "password1234",
+    "confirm_password": "password1234"
+  }
+  
+  {
+    "us_fname": "Ethan",
+    "us_lname": "Garcia",
+    "us_gender": "Male",
+    "us_role": "DELIVERY",
+    "us_phone": "1112223333",
+    "us_birthdate": "1987-04-18T00:00:00.000Z",
+    "us_email": "ethan.garcia@example.com",
+    "us_password": "letmein",
+    "confirm_password": "letmein"
+  }
+
+  {
+    "us_fname": "Isabella",
+    "us_lname": "Clark",
+    "us_gender": "Female",
+    "us_role": "MANAGER",
+    "us_phone": "7778889999",
+    "us_birthdate": "1982-09-05T00:00:00.000Z",
+    "us_email": "isabella.clark@example.com",
+    "us_password": "password789",
+    "confirm_password": "password789"
+  }
+  
+  {
+    "us_fname": "James",
+    "us_lname": "Rodriguez",
+    "us_gender": "Male",
+    "us_role": "ADMIN",
+    "us_phone": "4445556666",
+    "us_birthdate": "1979-02-22T00:00:00.000Z",
+    "us_email": "james.rodriguez@example.com",
+    "us_password": "test123",
+    "confirm_password": "test123"
+  }
+
+  

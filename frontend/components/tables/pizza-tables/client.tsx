@@ -3,34 +3,34 @@ import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { UserTableColumns } from "@/constants/data";
+import { Pizza } from "@/constants/data";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { columns } from "./columns";
 
 interface ProductsClientProps {
-  data: UserTableColumns[];
+  data: Pizza[];
 }
 
-export const UserClient: React.FC<ProductsClientProps> = ({ data }) => {
+export const PizzaClient: React.FC<ProductsClientProps> = ({ data }) => {
   const router = useRouter();
 
   return (
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Users (${data.length})`}
-          description="Manage users"
+          title={`Pizzas (${data.length})`}
+          description="Manage pizzas"
         />
         <Button
           className="text-xs md:text-sm"
-          onClick={() => router.push(`/dashboard/user/new`)}
+          onClick={() => router.push(`/dashboard/pizza/new`)}
         >
           <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>
       </div>
       <Separator />
-      <DataTable searchKey="us_fullname" columns={columns} data={data} />
+      <DataTable searchKey="pz_name" columns={columns} data={data} />
     </>
   );
 };

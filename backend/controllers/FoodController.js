@@ -197,14 +197,13 @@ export const getPizzaById = async (req, res) => {
 };
 
 export const createPizza = async (req, res) => {
-    const { pz_name, pz_des, pz_qty, pz_image } = req.body;
+    const { pz_name, pz_des, pz_image } = req.body;
     try {
         const newPizza = await prisma.pizza.create({
             data: {
                 pz_name,
                 pz_des,
-                pz_qty,
-                // pz_image,
+                pz_image,
             },
         });
         res.status(201).json(newPizza);
@@ -216,14 +215,13 @@ export const createPizza = async (req, res) => {
 
 export const updatePizza = async (req, res) => {
     const pizzaId = parseInt(req.params.id);
-    const { pz_name, pz_des, pz_qty, pz_image } = req.body;
+    const { pz_name, pz_des, pz_image } = req.body;
     try {
         const updatedPizza = await prisma.pizza.update({
             where: { pz_id: pizzaId },
             data: {
                 pz_name,
                 pz_des,
-                pz_qty,
                 pz_image,
             },
         });

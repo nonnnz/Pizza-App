@@ -1,10 +1,10 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
-import { UserTableColumns } from "@/constants/data";
+import { Pizza } from "@/constants/data";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export const columns: ColumnDef<UserTableColumns>[] = [
+export const columns: ColumnDef<Pizza>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -25,16 +25,12 @@ export const columns: ColumnDef<UserTableColumns>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "us_fullname",
-    header: "Full Name",
+    accessorKey: "pz_name",
+    header: "Pizza Name",
   },
   {
-    accessorKey: "us_email",
-    header: "Email",
-  },
-  {
-    accessorKey: "us_role",
-    header: "ROLE",
+    accessorKey: "pz_des",
+    header: "Pizza Description",
   },
   {
     id: "actions",
