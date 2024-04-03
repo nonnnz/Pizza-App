@@ -78,24 +78,30 @@ export const createAddressBook = async (req, res) => {
 };
 
 export const updateAddressBook = async (req, res) => {
-    const addressBookId = req.params.addresssId;
+    // const addressBookId = req.params.addresssId;
     const userId = req.session.userId;
     const { addb_user_id, addb_buildingNo, addb_buildingName, addb_street, addb_prov, addb_dist, addb_subdist, addb_zipcode, addb_directionguide, addb_phone, addb_name } = req.body;
     
     try {
         // Check if the address book belongs to the authenticated user
-        const existingAddressBook = await prisma.addressBook.findUnique({
-            where: { addb_id: addressBookId },
-            select: { addb_user_id: true },
+        // const existingAddressBook = await prisma.addressBook.findUnique({
+        //     where: { addb_id: addressBookId },
+        //     select: { addb_user_id: true },
+        // });
+        const existingAddressBook = await prisma.user.findUnique({
+            where: { user_id: userId },
+            include: { addressbooks: true },
         });
 
-        if (!existingAddressBook || existingAddressBook.addb_user_id !== userId) {
+        console.log(existingAddressBook);
+
+        if (!existingAddressBook || existingAddressBook.addressbooks[0].addb_user_id !== userId) {
             // If the address book does not exist or does not belong to the user, return an unauthorized response
             return res.status(403).json({ message: "Unauthorized to update this address book" });
         }
 
         const updatedAddressBook = await prisma.addressBook.update({
-        where: { addb_id: addressBookId },
+        where: { addb_id: existingAddressBook.addressbooks[0].addb_id },
         data: {
             addb_user_id,
             addb_buildingNo,

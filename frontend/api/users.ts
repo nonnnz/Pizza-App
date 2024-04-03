@@ -70,3 +70,51 @@ export const deleteUser = async (id: string) => {
     return error.message;
   }
 }
+
+interface AddressBook {
+  addb_user_id: string;
+  addb_buildingNo: string;
+  addb_buildingName: string;
+  addb_street: string;
+  addb_prov: string;
+  addb_dist: string;
+  addb_subdist: string;
+  addb_zipcode: string;
+  addb_directionguide: string;
+  addb_phone: string;
+  addb_name: string;
+}
+
+export const getAddressBook = async (id: string) => {
+  try {
+    const response = await axios.get(`${apiUrl}/addressbooks/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching address book:', error);
+    return error.message;
+  }
+}
+
+export const createAddressBook = async (address: AddressBook) => {
+  try {
+    const response = await axios.post(`${apiUrl}/addressbooks`, address, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating address book:', error);
+    return error.message;
+  }
+}
+
+export const updateAddressBook = async (id: string, address: AddressBook) => {
+  try {
+    const response = await axios.put(`${apiUrl}/addressbooks/${id}`, address, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating address book:', error);
+    return error.message;
+  }
+}

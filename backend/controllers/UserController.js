@@ -41,12 +41,45 @@ export const getUserById = async (req, res) => {
     }
 };
 
+const getUserByIdforUpdate = async (userId) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { user_id: userId },
+      include: {
+        addressbooks: true,
+        shoppingcarts: true,
+        orders: true,
+      },
+  });
+  if (!user) {
+    return null;
+}
+  return user;
+} catch (error) {
+  console.error("Error fetching user by ID:", error);
+  return null;
+}
+};
+
 export const createUser = async (req, res) => {
-  const { us_fname, us_lname, us_gender, us_role, us_phone, us_birthdate, us_email, us_password, confirm_password } = req.body;
+  const { us_fname, us_lname, us_gender, us_phone, us_birthdate, us_email, us_password, confirm_password } = req.body;
+  let { us_role } = req.body;
 
   const us_fullname = `${us_fname} ${us_lname}`;
 
   try {
+    if (!req.session.userId) {
+      us_role = "USER";
+    } else {
+      const user = await prisma.user.findUnique({
+        where: { user_id: req.session.userId},
+      });
+      
+      if (user.us_role !== "ADMIN" && user.us_role !== "MANAGER") {
+        return res.status(403).json({ error: "You are not authorized to perform this action" });
+      }
+    }
+
     if (us_password !== confirm_password) return res.status(400).json({ error: "Passwords do not match" });
     if(us_password === "" || us_password === null) return res.status(404).json({msg: "Empty Password"});
     const hashPassword = await argon2.hash(us_password);
@@ -73,9 +106,9 @@ export const createUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-    const userId = req.params.id;
+     const userId = req.params.id;
     const { us_fname, us_lname, us_gender, us_role, us_phone, us_birthdate, us_email, us_password, confirm_password } = req.body;
-    const currentUser = await getUserById(userId);
+    const currentUser = await getUserByIdforUpdate(userId);
     let hashPassword = currentUser.us_password;
     if (us_password && us_password !== "" && us_password !== undefined && us_password !== currentUser.us_password) {
       hashPassword = await argon2.hash(us_password);

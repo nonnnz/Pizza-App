@@ -5,7 +5,7 @@ import { getAllShoppingCarts, getShoppingCartById, createShoppingCart, updateSho
 const router = Router();
 
 // shopping carts
-router.get("/shopping-carts", verifyUser, getAllShoppingCarts);
+// router.get("/shopping-carts", verifyUser, getAllShoppingCarts);
 router.get("/shopping-carts", verifyUser, getShoppingCartById);
 router.post("/shopping-carts", verifyUser, createShoppingCart);
 router.put("/shopping-carts/:id", verifyUser, updateShoppingCart);

@@ -68,18 +68,10 @@ const LoginPage = () => {
         });
         if (userData.us_role === 'USER') {
           router.push('/'); 
+          window.location.reload();
         } else {
           router.push('/dashboard');
         }
-    }
-  };
-
-  const handleFetchMe = async () => {
-    try {
-      const userData = await fetchMe();
-      console.log('User data:', userData);
-    } catch (error) {
-      console.error('FetchMe error', error);
     }
   };
 
@@ -145,7 +137,6 @@ const LoginPage = () => {
         </CardContent>
         <CardFooter>
           <Button className="w-full" onClick={handleLogin}>Login</Button>
-          <Button className="w-full" onClick={handleFetchMe}>Fetch Me</Button>
         </CardFooter>
       </Card>
     </div>

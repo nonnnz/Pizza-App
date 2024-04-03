@@ -7,14 +7,26 @@ import { useScrollTop } from "@/hooks/use-scroll-top";
 import { ModeToggle, ModeToggleTG } from "@/components/mode-toggle";
 import { cn } from "@/lib/utils";
 import { Spinner } from "@/components/spinner";
-import { Menu, X, ChevronDown} from "lucide-react";
+import { Menu, X, ChevronDown, ShoppingCart } from "lucide-react";
 import { login, fetchMe, logout } from '@/api/auth';
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { getCart, createShoppingCart } from "@/api/cart";
 
 export const Navbar = () => {
     const router = useRouter();
-      const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState(null);
+    const [cartData, setCartData] = useState(null);
 
       useEffect(() => {
           const fetchData = async () => {
@@ -22,18 +34,48 @@ export const Navbar = () => {
                 const data = await fetchMe();
                 console.log('User data:', data);
                 setUserData(data);
-                if (data.us_role === 'USER') {
-                  router.push('/'); 
-                }
               } catch (error) {
                 console.error('Error fetching user data:', error);
                 router.push('/login');
               }
             };
-        
-            fetchData(); // Call the async function
+        const fetchCartData = async () => {
+            try {
+                const data = await getCart();
+                console.log('Cart data:', data);
+                setCartData(data);
+            } catch (error) {
+                console.error('Error fetching cart data:', error);
+                const data = await createShoppingCart();
+                console.log('Cart data:', data);
+                setCartData(data);
+            }
+        }
+        // fetchCartData(); 
+        fetchData(); 
       }, []);
     const scrolled = useScrollTop();
+
+    const handleLogout = async () => {
+      try {
+        await logout();
+        console.log('Logged out');
+        router.push('/login');
+        window.location.reload();
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+    }
+
+    const cartSumQty = () => {
+        let sum = 0;
+        if (cartData !== null && cartData.cart_items !== undefined) {
+            cartData.cart_items.map((item) => {
+                sum += item.quantity;
+            });
+        }
+        return sum;
+    }
 
     return (
         <div className="flex-grow">
@@ -49,10 +91,59 @@ export const Navbar = () => {
                 <div className="ml-auto justify-end w-full flex items-center gap-x-2">
                   {/* <ModeToggle /> */}
                   <ModeToggleTG />
-                  <Link href="/login">
-                  <Button variant="outline" size="default">Login
-                  </Button>
-                  </Link>
+                  {userData ? (
+                    <>
+                    <Button size="icon" variant="outline" className="relative">
+                      <Link href="/cart">
+                        <ShoppingCart className="h-[1.2rem] w-[1.2rem]" />
+                      </Link>
+                      {/* Display the number of items
+                      <span className="text-sm absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 rounded-full px-1 text-white">{cartData !== null ? cartSumQty(): 0}</span> */}
+                    </Button>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline">
+                                <div className="text-left">
+                                    <p className="text-xs font-medium leading-none">
+                                        Hello,
+                                    </p>
+                                    <p className="text-xs font-bold leading-none">
+                                        {userData?.us_fname || 'loading...'}
+                                    </p>
+                                </div>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-40" align="end" forceMount>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuGroup>
+                                <Link href="/profile">
+                                    <DropdownMenuItem>
+                                        Profile
+                                    </DropdownMenuItem>
+                                </Link>
+                                <Link href="/profile/address-book">
+                                    <DropdownMenuItem>
+                                        Address Book
+                                    </DropdownMenuItem>
+                                </Link>
+                                <Link href="/profile/tracker">
+                                    <DropdownMenuItem>
+                                        Pizza Tracker
+                                    </DropdownMenuItem>
+                                </Link>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => handleLogout()}>
+                                Log out
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    </>
+                ) : (
+                    <Link href="/login">
+                        <Button variant="outline" size="default">Login</Button>
+                    </Link>
+                )}
                 </div>
             </div>
         </div>

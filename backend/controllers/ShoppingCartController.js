@@ -41,7 +41,7 @@ export const getShoppingCartById = async (req, res) => {
             },
         });
 
-        if (!shoppingCart || shoppingCart.user_id !== userId) {
+        if (!shoppingCart) {
             // If the shopping cart does not exist or does not belong to the user, return an unauthorized response
             return res.status(403).json({ message: "Unauthorized to access this shopping cart" });
         }
@@ -186,7 +186,7 @@ export const createCartItem = async (req, res) => {
         const existingCartItem = await isCartItemExistInCart(cartId, cartit_food_id);
 
         if (existingCartItem) {
-            return res.status(409).json({ message: "Cart item already exists" });
+            return res.status(409).json({ message: "Cart item already exists", cartId, cartit_food_id});
         }
 
         const findFood = await prisma.food.findUnique({

@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Custom colors variables
+  primary: #FD754D
+  secondary: #F9F9F9
+*/
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -13,7 +20,9 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 240 5.9% 10%;
+    /* --primary: 240 5.9% 10%;
+     */
+    --primary: 13.6 97.8% 64.7%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 240 4.8% 95.9%;
