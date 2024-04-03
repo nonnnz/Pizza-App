@@ -184,9 +184,9 @@ export const createCartItem = async (req, res) => {
 
         // Check if the cart item already exists
         const existingCartItem = await isCartItemExistInCart(cartId, cartit_food_id);
-
-        if (existingCartItem) {
-            return res.status(409).json({ message: "Cart item already exists", cartId, cartit_food_id});
+        console.log(existingCartItem);
+        if (existingCartItem[0]) {
+            return res.status(409).json({ message: "Cart item already exists", cartId, cartit_food_id, cart_itemid: existingCartItem[1]});
         }
 
         const findFood = await prisma.food.findUnique({
@@ -232,42 +232,42 @@ async function isCartItemExistInCart(cartId, cartit_food_id) {
 
         // Check if the cart item exists within the shopping cart
         const existingCartItem = existingShoppingCart.cart_items.find(item => item.cartit_food_id === cartit_food_id);
-        
-        return !!existingCartItem; // Return true if the cart item exists, false otherwise
+        console.log(existingCartItem);
+        return [!!existingCartItem, existingCartItem.cart_itemid]; // Return true if the cart item exists, false otherwise
     } catch (error) {
         console.error("Error checking if cart item exists in cart:", error);
         return false;
     }
 }
 
-export const isCartItemExist = async (req, res) => {
-    const cartId = parseInt(req.params.id);
-    const { cartit_food_id } = req.body;
+// export const isCartItemExist = async (req, res) => {
+//     const cartId = parseInt(req.params.id);
+//     const { cartit_food_id } = req.body;
     
-    try {
-        // Check if the shopping cart exists
-        const existingShoppingCart = await prisma.shoppingCart.findUnique({
-            where: { cart_id: cartId },
-            include: { cart_items: true }, // Include the cart items associated with the shopping cart
-        });
+//     try {
+//         // Check if the shopping cart exists
+//         const existingShoppingCart = await prisma.shoppingCart.findUnique({
+//             where: { cart_id: cartId },
+//             include: { cart_items: true }, // Include the cart items associated with the shopping cart
+//         });
 
-        if (!existingShoppingCart) {
-            return res.status(404).json({ message: "Shopping cart not found" });
-        }
+//         if (!existingShoppingCart) {
+//             return res.status(404).json({ message: "Shopping cart not found" });
+//         }
 
-        // Check if the cart item exists within the shopping cart
-        const existingCartItem = existingShoppingCart.cart_items.find(item => item.cartit_food_id === cartit_food_id);
+//         // Check if the cart item exists within the shopping cart
+//         const existingCartItem = existingShoppingCart.cart_items.find(item => item.cartit_food_id === cartit_food_id);
         
-        if (existingCartItem) {
-            return res.status(200).json({ message: "Cart item exists" });
-        }
+//         if (existingCartItem) {
+//             return res.status(200).json({ message: "Cart item exists" });
+//         }
 
-        res.status(404).json({ message: "Cart item not found" });
-    } catch (error) {
-        console.error("Error checking if cart item exists:", error);
-        res.status(500).json({ message: error.message });
-    }
-};
+//         res.status(404).json({ message: "Cart item not found" });
+//     } catch (error) {
+//         console.error("Error checking if cart item exists:", error);
+//         res.status(500).json({ message: error.message });
+//     }
+// };
 
 
 
@@ -298,6 +298,8 @@ export const updateCartItem = async (req, res) => {
                 cartit_food_id,
             },
         });
+
+        console.log(existingCartItem, itemId, cartId, cartit_food_id, quantity);
 
         if (!existingCartItem) {
             return res.status(404).json({ message: 'Cart item not found' });

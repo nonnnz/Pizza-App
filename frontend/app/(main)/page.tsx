@@ -37,6 +37,7 @@ import { getCart, createShoppingCart, addToCart, updateCartItem } from "@/api/ca
 import { useReactTable } from "@tanstack/react-table";
 import { set } from "date-fns";
 import { useToast } from "@/components/ui/use-toast";
+import { fetchMe } from "@/api/auth";
 
 const formSchema = z.object({
   fd_id: z.string({
@@ -50,6 +51,7 @@ const MenuPage = () => {
     const [cart, setCart] = useState();
     const [CartSuccess, setCartSuccess] = useState(false);
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+    const [isLogin, setIsLogin] = useState(false);
 
     const [order, setOrder] = useState({
       cartit_food_id: 0,
@@ -57,6 +59,20 @@ const MenuPage = () => {
     });
 
     useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const data = await fetchMe();
+          if(typeof data === 'string' && data.includes("Request failed")) {
+            //
+          } else {
+            setIsLogin(true);
+            console.log('isLogin:', isLogin);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+
+        }
         const fetchData = async () => {
             try {
                 const data = await fetchPizza();
@@ -66,6 +82,7 @@ const MenuPage = () => {
                 console.error('Error fetching pizza data:', error);
             }
         };
+        fetchUser();
         fetchData(); 
     }, []);
 
@@ -83,12 +100,21 @@ const MenuPage = () => {
   }, [CartSuccess]);
 
     useEffect(() => {
-    console.log('Order:', order);
-    if (order.quantity > 0) {
+
+    console.log('Order:', order, isLogin);
+    if (order.quantity > 0 && isLogin) {
       handleAddToCart();
+    } else if(order.quantity === 0) {
+        //
+    } else {
+      toast({
+        variant: "destructive",
+        title: `Cannot add to cart`,
+        description: `You must be logged in to add items to your cart.`,
+    });
+
     }
-    }
-    , [order]);
+  }, [order, isLogin]);
 
     console.log(pizza);
 
@@ -121,7 +147,7 @@ const MenuPage = () => {
         console.log('Added to cart:', data);
         if(data.message === "Request failed with status code 409"){
           console.log('Error adding to cart:', data.response.data.message);
-          const updateCart = await updateCartItem(data.response.data.cartId, order);
+          const updateCart = await updateCartItem(data.response.data.cart_itemid, order);
           console.log('Updated cart:', updateCart);
           setCartSuccess(!CartSuccess);
           // window.location.reload();

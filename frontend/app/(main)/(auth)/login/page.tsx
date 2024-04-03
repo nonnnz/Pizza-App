@@ -33,7 +33,10 @@ const LoginPage = () => {
       try {
         const data = await fetchMe();
         console.log('User data:', data);
-        if (data.us_role === 'USER') {
+        if(typeof data === 'string' && data.includes("Request failed")) {
+          
+        }
+        else if (data.us_role === 'USER') {
           router.push('/');
         } else {
           router.push('/dashboard');

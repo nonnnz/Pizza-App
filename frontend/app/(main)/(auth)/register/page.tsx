@@ -158,11 +158,16 @@ const Register = () => {
       try {
         const data = await fetchMe();
         console.log('User data:', data);
+        if(typeof data === 'string' && data.includes("Request failed")) {
+          //
+        }
+        else {
         if (data.us_role === 'USER') {
           router.push('/');
         } else {
           router.push('/dashboard');
         }
+      }
       } catch (error) {
         console.error('Error fetching user data:', error);
       }

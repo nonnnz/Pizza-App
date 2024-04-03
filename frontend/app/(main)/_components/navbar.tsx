@@ -22,18 +22,26 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getCart, createShoppingCart } from "@/api/cart";
+import { usePathname, useSearchParams } from 'next/navigation'
 
 export const Navbar = () => {
     const router = useRouter();
     const [userData, setUserData] = useState(null);
     const [cartData, setCartData] = useState(null);
+    const pathname = usePathname()
 
       useEffect(() => {
           const fetchData = async () => {
               try {
                 const data = await fetchMe();
                 console.log('User data:', data);
-                setUserData(data);
+                if(typeof data === 'string' && data.includes("Request failed")) {
+                  // router.push('/login');
+                  console.log('pathname:', pathname);
+                  if(pathname !== '/') router.push('/login');
+                } else {
+                  setUserData(data);
+                }
               } catch (error) {
                 console.error('Error fetching user data:', error);
                 router.push('/login');

@@ -35,7 +35,8 @@ export const fetchMe = async () => {
   } catch (error) {
     // Handle the error according to your needs
     console.error('Error fetching user data:', error);
-    throw error; // Re-throw the error after handling
+    // throw error; // Re-throw the error after handling
+    return error.message; // Return only the error message
   }
 };
 

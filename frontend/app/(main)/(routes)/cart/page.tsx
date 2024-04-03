@@ -40,7 +40,11 @@ const Cart = () => {
             try {
               const data = await fetchMe();
               console.log('User data:', data);
-              setUserData(data);
+              if(typeof data === 'string' && data.includes("Request failed")) {
+                // router.push('/login');
+              } else {
+                setUserData(data);
+              }
             } catch (error) {
               console.error('Error fetching user data:', error);
               router.push('/login');
@@ -85,7 +89,7 @@ const Cart = () => {
             <h2 className="scroll-m-20 pb-2 text-3xl font-semibold  first:mt-0">
                 My Basket
               </h2>
-              {cartData !== null ? cartData.map((item) => (
+              {Array.isArray(cartData) ? cartData.map((item) => (
                 <>
                 {cartData.length > 0 ? <>
                     <Card className="w-full md:w-[705px] xl:w-[1214px] pt-10">

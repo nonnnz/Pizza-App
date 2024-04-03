@@ -39,6 +39,7 @@ interface CartItem {
 
 export const addToCart = async (item: CartItem) => {
   try {
+    console.log('Adding to cart2:', item);
     const response = await axios.post(`${apiUrl}/shopping-carts/cart-items`, item);
     return response.data;
   } catch (error) {
