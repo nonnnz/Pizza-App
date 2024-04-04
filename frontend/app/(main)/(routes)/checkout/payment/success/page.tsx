@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 
 const Success = () => {
     const searchParams = useSearchParams();
-    const router = useRouter();
 
     const orderid = searchParams.get('orderid')
     const [isOrderPlaced, setIsOrderPlaced] = useState(false)

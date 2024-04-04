@@ -136,6 +136,7 @@ const MenuPage = () => {
         cartit_food_id: parseInt(values.fd_id),
         quantity: quantity,
       });
+      console.log(quantity);
       // console.log('Order:', order);
       // handleAddToCart();
     }

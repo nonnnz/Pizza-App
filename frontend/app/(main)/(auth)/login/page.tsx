@@ -33,7 +33,10 @@ const LoginPage = () => {
       try {
         const data = await fetchMe();
         console.log('User data:', data);
-        if(typeof data === 'string' && data.includes("Request failed")) {
+        if (typeof data === 'string' && data.includes("Network Error")) {
+          console.log('Network error');
+        }
+        else if(typeof data === 'string' && data.includes("Request failed")) {
           
         }
         else if (data.us_role === 'USER') {

@@ -39,7 +39,11 @@ export const Navbar = () => {
                   // router.push('/login');
                   console.log('pathname:', pathname);
                   if(pathname !== '/') router.push('/login');
-                } else {
+                }
+                else if (typeof data === 'string' && data.includes("Network Error")) {
+                  console.log('Network error');
+                } 
+                else {
                   setUserData(data);
                 }
               } catch (error) {

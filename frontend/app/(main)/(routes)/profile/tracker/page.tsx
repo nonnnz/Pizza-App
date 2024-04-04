@@ -82,7 +82,7 @@ const Tracker = () => {
                             Your payment method is {order.pay_method}.
                         </p>
                         <p className="text-lg text-gray-600 dark:text-gray-400">
-                            Your order total is {order.order_total}.
+                            Your order total is {order.order_total} THB.
                         </p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
                             Your delivery address is {order.deli_address}.
