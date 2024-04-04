@@ -8,8 +8,20 @@ This project contains a frontend and a backend, orchestrated using Docker Compos
 - **[W. Romrampha](https://github.com/KaTang-lu)**: Project Manager
 - **[vsluuooq](https://github.com/vsluuooq)**: System Analyst
 - **[Chutikarng](https://github.com/Chutikarng)**: UX/UI Design
-- **[nonnnz](https://github.com/nonnnz)**: Software Engineer
+- **[Ratchanon B.](https://github.com/nonnnz)**: Software Engineer
 - **[J-SUKI](https://github.com/J-SUKI)**: Tester
+
+## Screenshot
+more -> [screenshots](https://github.com/nonnnz/Pizza-App/tree/main/screenshots)
+
+![img1](https://github.com/nonnnz/Pizza-App/blob/main/screenshots/2.png)
+![img12](https://github.com/nonnnz/Pizza-App/blob/main/screenshots/12.gif)
+![img5](https://github.com/nonnnz/Pizza-App/blob/main/screenshots/6.png)
+![img6](https://github.com/nonnnz/Pizza-App/blob/main/screenshots/7.png)
+![img9](https://github.com/nonnnz/Pizza-App/blob/main/screenshots/10.png)
+![img10](https://github.com/nonnnz/Pizza-App/blob/main/screenshots/11.png)
+
+
 
 ## Prerequisites
 
