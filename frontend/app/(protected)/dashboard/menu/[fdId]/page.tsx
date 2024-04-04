@@ -96,7 +96,7 @@ export default function Page() {
                 size_name: values.size_name,
                 crust_name: values.crust_name,
                 pz_id: parseInt(values.pz_id),
-                fd_price: parseInt(values.fd_price)
+                fd_price: parseFloat(values.fd_price)
             };
             console.log("Updating food:", updateFromData);
             const update = updateFood(Id, updateFromData);
@@ -270,7 +270,7 @@ export default function Page() {
                                 <FormItem>
                                 <FormLabel>Food Price</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Enter Food name" {...field} type="number"/>
+                                    <Input placeholder="Enter Food price" {...field} type="number" step="0.01" min={0}/>
                                 </FormControl>
                                 {/* <FormDescription>This is your first name.</FormDescription> */}
                                 <FormMessage />

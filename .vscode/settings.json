@@ -1,0 +1,21 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true, // or set to "autoSave": "onWindowChange"
+  "editor.tabSize": 2,
+  "prettier.tabWidth": 2,
+  "prettier.trailingComma": "none",
+  "prettier.arrowParens": "avoid",
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": false,
+  "prettier.semi": false,
+  "prettier.quoteProps": "as-needed",
+  "prettier.bracketSameLine": true, // Use `bracketSameLine` instead
+  "prettier.bracketSpacing": true,
+  "prettier.useTabs": false,
+  "prettier.endOfLine": "auto",
+  "prettier.ignorePath": ".prettierignore",
+  "prettier.proseWrap": "preserve", // Only format indentation and comments
+  "prettier.htmlWhitespaceSensitivity": "ignore",
+  "prettier.requirePragma": false,
+  "prettier.insertPragma": false
+}

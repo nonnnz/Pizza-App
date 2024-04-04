@@ -94,6 +94,8 @@ const MenuPage = () => {
             setCart(data);
         } catch (error) {
             console.error('Error fetching cart data:', error);
+            createShoppingCart();
+            // window.location.reload();
         }
     }
     fetchCart();

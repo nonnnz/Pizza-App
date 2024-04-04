@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { getAllAddressBooks, getAddressBookById, getAddressBookByUserId, createAddressBook, updateAddressBook, deleteAddressBook } from "../controllers/AddressBookController.js";
+import {
+  getAllAddressBooks,
+  getAddressBookById,
+  getAddressBookByUserId,
+  createAddressBook,
+  updateAddressBook,
+  deleteAddressBook,
+} from "../controllers/AddressBookController.js";
 import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
 
 const router = Router();

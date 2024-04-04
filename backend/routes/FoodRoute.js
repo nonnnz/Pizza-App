@@ -1,6 +1,17 @@
 import { Router } from "express";
 import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
-import { getAllFoods, getFoodById, createFood, deleteFood, getAllPizzaWithDetailsAndFood, getPizzaById, createPizza, deletePizza, updatePizza, updateFood} from "../controllers/FoodController.js";
+import {
+  getAllFoods,
+  getFoodById,
+  createFood,
+  deleteFood,
+  getAllPizzaWithDetailsAndFood,
+  getPizzaById,
+  createPizza,
+  deletePizza,
+  updatePizza,
+  updateFood,
+} from "../controllers/FoodController.js";
 
 const router = Router();
 

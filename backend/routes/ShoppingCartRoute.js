@@ -1,6 +1,16 @@
 import { Router } from "express";
 import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
-import { getAllShoppingCarts, getShoppingCartById, createShoppingCart, updateShoppingCart, deleteShoppingCart, getCartItemsByCartId, createCartItem, updateCartItem, deleteCartItem } from "../controllers/ShoppingCartController.js";
+import {
+  getAllShoppingCarts,
+  getShoppingCartById,
+  createShoppingCart,
+  updateShoppingCart,
+  deleteShoppingCart,
+  getCartItemsByCartId,
+  createCartItem,
+  updateCartItem,
+  deleteCartItem,
+} from "../controllers/ShoppingCartController.js";
 
 const router = Router();
 

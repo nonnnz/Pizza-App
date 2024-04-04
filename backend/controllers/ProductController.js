@@ -3,10 +3,10 @@ import prisma from "../DB/db.config.js";
 export const getAllProducts = async (req, res) => {
   let products;
   try {
-    if(req.role === "ADMIN"){
-        products = await prisma.product.findMany();
+    if (req.role === "ADMIN") {
+      products = await prisma.product.findMany();
     } else {
-        products = await prisma.product.findMany({
+      products = await prisma.product.findMany({
         where: { created_by_id: req.userId },
       });
     }
@@ -83,7 +83,7 @@ export const deleteProduct = async (req, res) => {
       where: { pd_id: productId },
     });
 
-    res.json({msg: "Product deleted successfuly", deletedProduct});
+    res.json({ msg: "Product deleted successfuly", deletedProduct });
   } catch (error) {
     console.error("Error deleting product:", error);
     res.status(500).json({ error: "Internal server error" });

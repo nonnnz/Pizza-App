@@ -1,14 +1,21 @@
-
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 import argon2 from "argon2";
 
-
 async function main() {
+  // clear all data
+  await prisma.orderItem.deleteMany({});
+  await prisma.order.deleteMany({});
+  await prisma.addressBook.deleteMany({});
+  await prisma.shoppingCart.deleteMany({});
+  await prisma.cartItem.deleteMany({});
   await prisma.user.deleteMany({});
-  
-// add admin
+  await prisma.pizza.deleteMany({});
+  await prisma.food.deleteMany({});
+  await prisma.pizzaDetail.deleteMany({});
+
+  // add admin
   const hashPassword = await argon2.hash("password123");
   await prisma.user.createMany({
     data: [
