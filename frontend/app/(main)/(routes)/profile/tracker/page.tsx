@@ -43,6 +43,7 @@ const Tracker = () => {
             // router.push('/login');
           } else {
             // setIsOrderPlaced(true)
+            data.orders.reverse();
             setUserData(data);
             console.log('User data2:', data.user_id);
             const Id = (data.user_id).toString();

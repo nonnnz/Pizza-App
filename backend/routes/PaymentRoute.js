@@ -9,17 +9,19 @@ import { deactivateShoppingCart } from "../controllers/OrderController.js";
 import stripePackage from "stripe";
 import { v4 as uuidv4 } from "uuid";
 import express from "express";
+import { PrismaClient } from "@prisma/client";
 
 const stripe = stripePackage(process.env.STRIPE_SECRET_KEY);
 const router = Router();
 
-router.post("/create-payment", verifyUser, createPayment, deactivateShoppingCart);
+router.post("/create-payment", verifyUser, createPayment);
 
 router.post("/session", verifyUser, sessionTest);
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret =
-  "whsec_b88602964b2f4bb35a82cef666a86d5e1fe64ab13b27bf18e0a7ab2855c255c3";
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+const prisma = new PrismaClient();
 
 router.post(
   "/webhook",
@@ -69,7 +71,7 @@ router.post(
           });
 
           // Deactivate shopping cart
-          await deactivateShoppingCart();
+          // await deactivateShoppingCart();
           console.log("=== update result", result, status);
         } catch (error) {
           console.log(error);

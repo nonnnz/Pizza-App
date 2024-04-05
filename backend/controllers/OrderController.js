@@ -59,8 +59,7 @@ export const getOrderById = async (req, res) => {
   }
 };
 
-export const deactivateShoppingCart = async (req, res) => {
-  const userId = req.session.userId;
+export const deactivateShoppingCart = async (userId) => {
   try {
     const shoppingCart = await prisma.shoppingCart.findFirst({
       where: {
@@ -70,7 +69,7 @@ export const deactivateShoppingCart = async (req, res) => {
     });
 
     if (!shoppingCart) {
-      return res.status(404).json({ error: "Shopping cart not found" });
+      return "Shopping cart not found";
     }
 
     await prisma.shoppingCart.update({
@@ -78,10 +77,10 @@ export const deactivateShoppingCart = async (req, res) => {
       data: { cart_active: false },
     });
 
-    res.status(200).json({ message: "Shopping cart deactivated" });
+    return "Shopping cart deactivated";
   } catch (error) {
     console.error("Error deactivating shopping cart:", error);
-    res.status(500).json({ message: error.message });
+    return error.message;
   }
 };
 

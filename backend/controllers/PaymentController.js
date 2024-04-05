@@ -1,5 +1,6 @@
 import prisma from "../DB/db.config.js";
 import stripePackage from "stripe";
+import { deactivateShoppingCart } from "./OrderController.js";
 
 const stripe = stripePackage(process.env.STRIPE_SECRET_KEY);
 
@@ -102,6 +103,9 @@ export const createPayment = async (req, res) => {
       orderId,
       sessionId,
     );
+
+    // Deactivate shopping cart
+    await deactivateShoppingCart(userId);
 
     // Send the response to the client
     return res
